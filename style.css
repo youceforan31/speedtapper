@@ -1,0 +1,322 @@
+:root {
+    /* --- Dark Theme (Default) --- */
+    --bg-color-dark: #1a1a1a; --text-color-dark: #ffffff; --text-color-secondary-dark: #b0b0b0;
+    --surface-color-dark: #282828; --border-color-dark: #444444; --shadow-color-dark: rgba(0, 0, 0, 0.4);
+    --accent1-dark: var(--blue-color); --accent2-dark: var(--red-color); --accent3-dark: var(--green-color);
+    --accent4-dark: var(--purple-color); --accent5-dark: var(--orange-color); --accent6-dark: var(--yellow-color);
+    --button-text-color-dark: #ffffff; --popup-bg-dark: #2c2c2c;
+
+    /* --- Light Theme --- */
+    --bg-color-light: #f0f0f0; --text-color-light: #222222; --text-color-secondary-light: #555555;
+    --surface-color-light: #ffffff; --border-color-light: #cccccc; --shadow-color-light: rgba(0, 0, 0, 0.15);
+    --accent1-light: var(--blue-color); --accent2-light: var(--red-color); --accent3-light: var(--green-color);
+    --accent4-light: var(--purple-color); --accent5-light: var(--orange-color); --accent6-light: #fbc02d; /* Darker Yellow */
+    --button-text-color-light: #ffffff; --popup-bg-light: #ffffff;
+
+    /* --- Color Palette (Shared) --- */
+    --blue-color: #2196F3; --red-color: #F44336; --green-color: #4CAF50;
+    --purple-color: #9C27B0; --orange-color: #FF9800; --yellow-color: #FFEB3B;
+    --gray-color: #9E9E9E; --dark-blue-color: #1976D2; --dark-red-color: #D32F2F;
+    --dark-gray-color: #616161; --light-gray-color: #BDBDBD;
+
+    /* --- Applied Theme Variables --- */
+    --bg-color: var(--bg-color-dark); --text-color: var(--text-color-dark); --text-color-secondary: var(--text-color-secondary-dark);
+    --surface-color: var(--surface-color-dark); --border-color: var(--border-color-dark); --shadow-color: var(--shadow-color-dark);
+    --accent1: var(--accent1-dark); --accent2: var(--accent2-dark); --accent3: var(--accent3-dark);
+    --accent4: var(--accent4-dark); --accent5: var(--accent5-dark); --accent6: var(--accent6-dark);
+    --button-text-color: var(--button-text-color-dark); --popup-bg: var(--popup-bg-dark);
+
+    /* --- Other Variables --- */
+    --animation-duration: 0.1s; --button-radius: 15px; --center-bar-height: 100px;
+}
+
+body.theme-light {
+    --bg-color: var(--bg-color-light); --text-color: var(--text-color-light); --text-color-secondary: var(--text-color-secondary-light);
+    --surface-color: var(--surface-color-light); --border-color: var(--border-color-light); --shadow-color: var(--shadow-color-light);
+    --accent1: var(--accent1-light); --accent2: var(--accent2-light); --accent3: var(--accent3-light);
+    --accent4: var(--accent4-light); --accent5: var(--accent5-light); --accent6: var(--accent6-light);
+    /* Button text color might need adjustment for light theme depending on accent colors */
+    /* --button-text-color: var(--button-text-color-light); */
+     --button-text-color: #ffffff; /* Keeping white for better contrast on colored buttons */
+    --popup-bg: var(--popup-bg-light);
+}
+/* Specific adjustments for light theme */
+body.theme-light #btn-achievements { color: #333; } /* Ensure text visibility on yellow */
+body.theme-light .target-element { color: #333; }
+body.theme-light .achievement-popup .popup-content { color: #333; }
+body.theme-light .log-entries-box, body.theme-light .achievements-list-box { background-color: rgba(0,0,0,0.03); }
+body.theme-light .ripple { background-color: rgba(0, 0, 0, 0.1); }
+
+
+/* @font-face { font-family: 'ArabicCustomFont'; src: url('../fonts/arial.ttf'); } */ /* Note the path change if you move fonts folder */
+/* If the font file is in the root: src: url('/fonts/arial.ttf'); */
+/* If the font file is inside css/fonts: src: url('fonts/arial.ttf'); */
+/* Assuming fonts folder is at the root: */
+@font-face {
+    font-family: 'ArabicCustomFont';
+    /* Make sure the path is correct relative to the *CSS file* or use absolute path from root */
+    /* If fonts is in the root: */
+    src: url('../fonts/arial.ttf');
+    /* If fonts is inside css/: */
+    /* src: url('fonts/arial.ttf'); */
+}
+
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0;
+    background-color: var(--bg-color); color: var(--text-color); display: flex;
+    justify-content: center; align-items: center; min-height: 100vh; overflow: hidden;
+    -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.app-container {
+    width: 100%; height: 100vh; max-width: 600px; position: relative; overflow: hidden;
+    background-color: var(--bg-color); display: flex; flex-direction: column;
+    transition: background-color 0.3s ease;
+}
+
+.screen {
+    display: none; flex-direction: column; align-items: center; padding: 0;
+    box-sizing: border-box; width: 100%; height: 100%; position: absolute; top: 0; left: 0;
+    background-color: var(--bg-color); background-size: cover; background-position: center;
+    background-repeat: no-repeat; opacity: 1;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out, background-color 0.3s ease;
+     padding-top: env(safe-area-inset-top);
+     padding-bottom: env(safe-area-inset-bottom);
+}
+ /* Note the path change if you move images folder */
+ /* Assuming images folder is at the root: */
+ #menu-screen { background-image: url('../images/menu_bg.png'); }
+ #settings-screen { background-image: url('../images/settings_bg.png'); }
+ #log-screen { background-image: url('../images/log_bg.png'); }
+ #achievements-screen { background-image: url('../images/achievements_bg.png'); }
+ /* If images folder is inside css/: */
+ /* #menu-screen { background-image: url('images/menu_bg.png'); } */
+ /* etc. */
+
+ #menu-screen, #settings-screen, #log-screen, #achievements-screen { padding-left: 20px; padding-right: 20px; padding-top: calc(20px + env(safe-area-inset-top)); padding-bottom: calc(20px + env(safe-area-inset-bottom)); }
+ #game-screen { padding-left: 5px; padding-right: 5px; }
+
+
+.screen.active { display: flex; z-index: 1; }
+.screen.fade-enter { opacity: 0; } .screen.fade-enter-active { opacity: 1; }
+.screen.fade-exit { opacity: 1; } .screen.fade-exit-active { opacity: 0; position: absolute; }
+.screen.slide-left-enter { transform: translateX(100%); } .screen.slide-left-enter-active { transform: translateX(0); z-index: 2; }
+.screen.slide-left-exit { transform: translateX(0); } .screen.slide-left-exit-active { transform: translateX(-100%); }
+.screen.slide-right-enter { transform: translateX(-100%); } .screen.slide-right-enter-active { transform: translateX(0); z-index: 2; }
+.screen.slide-right-exit { transform: translateX(0); } .screen.slide-right-exit-active { transform: translateX(100%); }
+
+.base-button {
+    border: none; border-radius: var(--button-radius); padding: 10px 18px; font-size: 18px;
+    font-weight: bold; color: var(--button-text-color); cursor: pointer; text-align: center;
+    transition: background-color var(--animation-duration) ease, transform var(--animation-duration) ease, opacity 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 6px var(--shadow-color); font-family: inherit; touch-action: manipulation;
+    background-color: var(--gray-color);
+}
+.base-button:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; filter: grayscale(50%); }
+.base-button.arabic-font { font-family: 'ArabicCustomFont', sans-serif; }
+.base-button:not(:disabled):active {
+    transform: scale(0.97); /* Re-add active state via CSS */
+    filter: brightness(0.9);
+}
+
+
+.menu-buttons-container { display: flex; flex-direction: column; align-items: center; width: 100%; margin-top: 15px; }
+.menu-button { width: 80%; max-width: 350px; margin-bottom: 12px; min-height: 48px; }
+.menu-divider { width: 70%; margin: 10px 0; border: none; border-top: 1px solid var(--border-color); transition: border-color 0.3s ease; }
+
+.game-button { position: relative; overflow: hidden; display: flex; justify-content: center; align-items: center; }
+.game-button-label { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; font-size: 40px; font-weight: bold; color: var(--button-text-color); pointer-events: none; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); z-index: 1; }
+.game-button-label.arabic-font { font-family: 'ArabicCustomFont', sans-serif; }
+
+.custom-label { text-align: center; width: 100%; box-sizing: border-box; padding: 5px; color: var(--text-color); text-shadow: 1px 1px 2px rgba(0,0,0,0.3); transition: color 0.3s ease; }
+.custom-label.arabic-font { font-family: 'ArabicCustomFont', sans-serif; direction: rtl; }
+.screen-title { font-size: 40px; margin-top: 0; margin-bottom: 20px; color: var(--text-color); }
+.app-title { font-size: 45px; margin-bottom: 15px; }
+.menu-stats-display { font-size: 17px; white-space: pre-line; margin-bottom: 25px; color: var(--text-color-secondary); line-height: 1.6; }
+
+.slider-container, .select-container { width: 90%; max-width: 450px; /* Wider */ margin: 15px auto; display: flex; flex-direction: column; align-items: center; }
+.setting-label { font-size: 18px; margin-bottom: 8px; color: var(--text-color-secondary); }
+input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 10px; background: var(--dark-gray-color); border-radius: 5px; outline: none; opacity: 0.8; transition: opacity .2s; cursor: pointer; }
+input[type="range"]:hover { opacity: 1; }
+input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 25px; height: 25px; background: var(--accent1); border-radius: 50%; cursor: pointer; }
+input[type="range"]::-moz-range-thumb { width: 25px; height: 25px; background: var(--accent1); border-radius: 50%; cursor: pointer; border: none; }
+.setting-select {
+    width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border-color);
+    background-color: var(--surface-color); color: var(--text-color); font-size: 16px;
+    cursor: pointer; -webkit-appearance: none; appearance: none;
+    /* SVG needs to dynamically update color based on theme variable */
+    /* This requires JS to update or using mask-image with a solid color background */
+    /* Simpler: Use a static SVG or data URI that works on both themes, or omit the arrow */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23CCCCCC%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat; background-position: right 10px center; background-size: 12px auto;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+ .setting-select.arabic-font { font-family: 'ArabicCustomFont', sans-serif; }
+
+
+.popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.75); display: none; justify-content: center; align-items: center; z-index: 1000; opacity: 0; transition: opacity 0.3s ease; }
+.popup-overlay.active { display: flex; opacity: 1; }
+.popup-content { background-color: var(--popup-bg); padding: 25px; border-radius: 12px; box-shadow: 0 6px 20px var(--shadow-color); width: 85%; max-width: 450px; display: flex; flex-direction: column; align-items: center; border: 1px solid var(--border-color); transform: scale(0.9); transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease; }
+.popup-overlay.active .popup-content { transform: scale(1); }
+.popup-title { font-size: 24px; font-weight: bold; margin-bottom: 15px; color: var(--accent3); }
+.popup-title.arabic-font { font-family: 'ArabicCustomFont', sans-serif; }
+.popup-body { margin-bottom: 20px; text-align: center; max-height: 60vh; overflow-y: auto; width: 100%; color: var(--text-color); }
+.popup-body.arabic-font { font-family: 'ArabicCustomFont', sans-serif; direction: rtl; }
+.popup-text-large { font-size: 20px; margin-bottom: 25px; }
+.popup-buttons { display: flex; justify-content: space-around; width: 100%; margin-top: 10px; flex-wrap: wrap; gap: 10px; }
+.popup-buttons .menu-button { width: 45%; margin-bottom: 0; font-size: 17px; min-width: 120px; }
+.popup-column-buttons { flex-direction: column; align-items: center; gap: 12px; }
+.popup-column-buttons .menu-button { width: 90%; }
+.popup-cancel-button { background-color: var(--gray-color) !important; margin-top: 15px !important; width: 70% !important; }
+
+/* --- Single Player Screen --- */
+#game-screen { justify-content: space-between; }
+.game-header { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 10px 20px 0px 20px; box-sizing: border-box; margin-top: 5px; }
+.sp-highscore { font-size: 20px; text-align: left; color: var(--text-color-secondary); }
+.sp-timer { font-size: 28px; font-weight: bold; color: var(--text-color); text-align: right; transition: color 0.3s ease; }
+.sp-timer.low-time { color: var(--orange-color) !important; animation: pulse 1s infinite; }
+.sp-score { font-size: 110px; color: var(--accent1); font-weight: bold; flex-grow: 1; display: flex; align-items: center; justify-content: center; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); line-height: 1; margin: 2vh 0; }
+.sp-tap-button { width: 70vw; height: 55vw; max-width: 320px; max-height: 250px; border-radius: 45px; margin-bottom: 3vh; }
+.sp-tap-button .game-button-label { font-size: 35px; }
+#game-screen.tap-mode #single-player-target-area { display: none; }
+#game-screen.tap-mode #tap-button { display: flex; }
+#game-screen.tap-mode #single-player-timer { display: block; }
+#game-screen.target-mode #tap-button { display: none; }
+#game-screen.target-mode #single-player-target-area { display: block; flex-grow: 2; width: 100%; position: relative; margin-bottom: 3vh; }
+#game-screen.target-mode #single-player-timer { display: block; }
+.sp-back-button { width: 60%; margin-top: auto; margin-bottom: 15px; }
+
+/* --- Two Player Screen --- */
+#two-player-screen { justify-content: space-between; padding: 0; flex-direction: column; }
+.player-area { width: 100%; flex-grow: 1; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; transition: background-color 0.3s ease; }
+.player-area.player1 { background-color: var(--accent1); }
+.player-area.player2 { background-color: var(--accent2); }
+.tp-game-button { width: 100%; height: 100%; position: absolute; top: 0; left: 0; border-radius: 0; box-shadow: none; font-size: 0; display: flex; justify-content: center; align-items: center; background-color: transparent !important; }
+#two-player-screen.tap-mode .target-element { display: none; }
+#two-player-screen.target-mode .tp-game-button { display: none; }
+#two-player-screen.tap-mode .tp-game-button { display: flex; }
+
+.center-controls { width: 100%; height: var(--center-bar-height); display: flex; justify-content: space-between; align-items: stretch; background-color: #000000; z-index: 5; padding: 5px 10px; box-sizing: border-box; flex-shrink: 0; }
+.center-controls .player-info { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 90px; padding: 5px; box-sizing: border-box; }
+.center-controls .player-info.player1 { transform: rotate(180deg); }
+.player-score { font-size: 32px; font-weight: bold; margin-top: 4px; color: var(--text-color) !important; }
+.player-name { font-size: 15px; color: var(--text-color-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; text-align: center; } /* Handle long names */
+ #p1-score { color: var(--accent1) !important; }
+ #p2-score { color: var(--accent2) !important; }
+.center-column { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 0 8px; overflow: hidden; }
+.timer-display { font-size: 28px; font-weight: bold; text-align: center; order: 1; transition: color 0.3s ease; color: var(--text-color); }
+.timer-display.low-time { color: var(--orange-color); animation: pulse 1s infinite; }
+.status-display { font-size: 16px; font-weight: bold; text-align: center; margin: 4px 0; order: 2; color: var(--text-color-secondary); }
+.status-display.arabic-font { font-family: 'ArabicCustomFont', sans-serif; }
+.control-buttons { display: flex; gap: 8px; order: 3; margin-top: 4px; transition: opacity 0.3s ease, transform 0.3s ease; }
+.control-buttons.hidden { opacity: 0; pointer-events: none; transform: scale(0.8); }
+.control-button { width: auto; padding: 5px 10px; font-size: 14px; margin-bottom: 0; min-height: 30px; }
+ #start-button { background-color: var(--accent3); }
+ #menu-button-2p { background-color: var(--gray-color); }
+
+.arabic-font { font-family: 'ArabicCustomFont', sans-serif; direction: rtl; }
+
+@keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.9; } 50% { transform: scale(1.1); opacity: 1; } }
+
+/* Target Mode CSS */
+@keyframes target-appear { from { opacity: 0; transform: scale(0.5); } to { opacity: 1; transform: scale(1); } }
+.target-element {
+    position: absolute; width: 70px; height: 70px; background-color: var(--accent6);
+    border: 4px solid var(--accent5); border-radius: 50%; cursor: pointer;
+    box-shadow: 0 0 18px color-mix(in srgb, var(--accent6) 80%, transparent);
+    transition: transform 0.1s ease, box-shadow 0.2s ease, background-color 0.3s ease, border-color 0.3s ease; z-index: 10;
+    color: #333; font-weight: bold; display: flex; justify-content: center; align-items: center;
+    font-size: 13px; text-align: center; padding: 5px; box-sizing: border-box; line-height: 1.1;
+    opacity: 0; transform: scale(0.5); animation: target-appear 0.2s 0.05s ease-out forwards;
+}
+.target-element:active { transform: scale(0.9); box-shadow: 0 0 5px color-mix(in srgb, var(--accent6) 50%, transparent); }
+#single-player-target-area .target-element { width: 90px; height: 90px; font-size: 16px; }
+
+ /* Ripple Effect CSS */
+@keyframes ripple-effect { to { transform: scale(4); opacity: 0; } }
+.ripple { position: absolute; border-radius: 50%; transform: scale(0); animation: ripple-effect 0.4s linear; background-color: rgba(255, 255, 255, 0.5); pointer-events: none; z-index: 9; }
+ body.theme-light .ripple { background-color: rgba(0, 0, 0, 0.1); }
+
+/* Countdown Overlay */
+#countdown-overlay { z-index: 1001; background-color: rgba(0, 0, 0, 0.6); }
+#countdown-text { font-size: 140px; font-weight: bold; color: white; text-shadow: 3px 3px 8px black; animation: pulse 0.8s infinite ease-in-out; }
+
+/* Mode Select Popup */
+#popup-mode-select .popup-content { max-width: 350px; }
+ #btn-select-tap { background-color: var(--accent1); }
+ #btn-select-target { background-color: var(--accent2); }
+
+/* Game Log & Achievements Screens */
+#log-screen, #achievements-screen { justify-content: flex-start; }
+.screen-back-button { width: 60%; margin-top: 15px; margin-bottom: 0px; position: absolute; bottom: calc(20px + env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); background-color: var(--accent1); }
+.log-summary-box, .achievement-progress-box { width: 95%; padding: 12px; background-color: var(--surface-color); border-radius: 8px; margin-bottom: 15px; text-align: center; font-size: 15px; line-height: 1.6; color: var(--text-color-secondary); border: 1px solid var(--border-color); transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease; }
+.log-entries-box, .achievements-list-box { width: 100%; flex-grow: 1; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; box-sizing: border-box; background-color: rgba(0,0,0,0.1); transition: background-color 0.3s ease, border-color 0.3s ease; margin-bottom: 80px; }
+.log-placeholder { text-align: center; color: var(--text-color-secondary); margin-top: 20px; }
+.log-entry, .achievement-entry { background-color: var(--surface-color); border-radius: 6px; padding: 10px 12px; margin-bottom: 8px; font-size: 14px; line-height: 1.6; border-left: 4px solid var(--gray-color); transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease; color: var(--text-color); }
+.log-entry.two-player { border-left-color: var(--accent2); }
+.log-entry.single-player { border-left-color: var(--accent1); }
+.log-entry span, .achievement-entry span { display: block; }
+.log-entry .log-date { font-size: 12px; color: var(--text-color-secondary); margin-bottom: 4px; }
+.log-entry .log-details { font-weight: normal; color: var(--text-color); }
+.log-entry .log-winner-p1 { color: var(--accent1); font-weight: bold; }
+.log-entry .log-winner-p2 { color: var(--accent2); font-weight: bold; }
+.log-entry .log-winner-sp { color: var(--accent3); font-weight: bold; }
+.log-entry .log-tie { color: var(--accent6); font-weight: bold; }
+.achievement-entry { border-left-color: var(--accent6); display: flex; align-items: center; gap: 12px; }
+.achievement-icon-list { font-size: 24px; opacity: 0.6; transition: opacity 0.3s ease, filter 0.3s ease; filter: grayscale(100%);}
+.achievement-details { flex-grow: 1; }
+.achievement-title-list { font-weight: bold; margin-bottom: 3px; color: var(--text-color); }
+.achievement-desc-list { font-size: 13px; color: var(--text-color-secondary); }
+.achievement-entry.unlocked { border-left-color: var(--accent3); background-color: color-mix(in srgb, var(--surface-color) 90%, var(--accent3) 5%); }
+.achievement-entry.unlocked .achievement-icon-list { filter: grayscale(0); opacity: 1; }
+.achievement-progress-box { font-size: 14px; }
+
+/* Game Over Popup */
+#popup-game-over .popup-content { max-width: 400px; }
+.game-over-winner { font-size: 26px; font-weight: bold; margin-bottom: 15px; }
+#final-score-details { font-size: 18px; line-height: 1.6; margin-bottom: 15px; }
+#final-score-details span { display: block; margin-bottom: 5px;}
+#share-button-container { margin-top: 15px; width: 100%; display: flex; justify-content: center;}
+#btn-share-result { background-color: var(--accent4); width: 70%; max-width: 250px; }
+
+/* Developer Info */
+.developer-info-box { margin-top: 15px; font-size: 14px; text-align: center; color: var(--text-color-secondary); }
+.developer-info-box a { color: var(--accent1); text-decoration: none; }
+.developer-info-box a:hover { text-decoration: underline; }
+
+ /* Settings Screen Layout */
+ #settings-screen { justify-content: flex-start; }
+ .settings-section { width: 100%; max-width: 450px; margin-left:auto; margin-right:auto; margin-bottom: 18px; }
+ .setting-button { width: 100%; margin-bottom: 10px !important; }
+ #language-toggle { margin-top: 10px; background-color: var(--accent4); }
+ #btn-settings-back { margin-top: auto; position: static; transform: none; left: auto; bottom: auto; width: 80%; max-width: 350px; background-color: var(--accent1); margin-bottom: 0; }
+
+ /* Achievement Unlocked Popup */
+ .achievement-popup .popup-content { background: linear-gradient(145deg, var(--accent6), color-mix(in srgb, var(--accent6) 60%, var(--accent5))); border-color: var(--accent5); color: #333; }
+ .achievement-icon { font-size: 50px; margin-bottom: 10px; animation: pulse 1.5s infinite; }
+ .achievement-title { color: #fff; text-shadow: 1px 1px 2px #000; }
+ .achievement-name { font-size: 18px; font-weight: bold; margin-bottom: 5px; }
+ .achievement-desc { font-size: 14px; }
+
+/* Style for :active state used in JS (simplified) */
+/* Not needed if relying purely on CSS :active */
+/*
+.button-active-feedback {
+    transform: scale(0.97);
+    filter: brightness(0.9);
+}
+*/
+
+/* Additional style for win animation */
+.win-flash {
+    animation: win-flash-anim 0.6s ease-out;
+}
+
+@keyframes win-flash-anim {
+    0% { background-color: var(--original-color); transform: scale(1); }
+    30% { background-color: #ffffff; transform: scale(1.1); }
+    100% { background-color: var(--original-color); transform: scale(1); }
+}

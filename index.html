@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Speed Tapper Ultra+</title> <!-- New Title -->
+    <!-- الربط بملف الأنماط الخارجي -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- تحميل خط مخصص إذا لزم الأمر (يمكن نقله لملف CSS باستخدام @font-face) -->
+    <!-- <link rel="preload" href="fonts/arabic-font.woff2" as="font" type="font/woff2" crossorigin> -->
+</head>
+<body class="theme-dark"> <!-- Default Theme -->
+    <!-- Background Music Player -->
+    <audio id="background-music" loop>
+        <source src="sounds/background.mp3" type="audio/mpeg"> <!-- تأكد من وجود الملف أو استبدله -->
+        Your browser does not support the audio element.
+    </audio>
+
+    <div class="app-container">
+
+        <!-- Menu Screen -->
+        <div id="menu-screen" class="screen active">
+            <h1 class="custom-label arabic-font app-title" data-i18n="main_menu">SPEED TAPPER</h1>
+            <div id="menu-stats" class="custom-label arabic-font menu-stats-display"></div>
+            <div class="menu-buttons-container">
+                <button id="btn-single-player" class="base-button menu-button arabic-font" style="background-color: var(--accent1);" data-i18n="single_player">SINGLE PLAYER</button>
+                <button id="btn-two-players" class="base-button menu-button arabic-font" style="background-color: var(--accent2);" data-i18n="two_players">TWO PLAYERS</button>
+                <button id="btn-game-log" class="base-button menu-button arabic-font" style="background-color: var(--accent4);" data-i18n="game_log">GAME LOG</button>
+                <button id="btn-achievements" class="base-button menu-button arabic-font" style="background-color: var(--accent6); color: #333;" data-i18n="achievements">ACHIEVEMENTS</button> <!-- Achievements Button -->
+                <hr class="menu-divider">
+                <button id="btn-settings" class="base-button menu-button arabic-font" style="background-color: var(--accent3);" data-i18n="settings">SETTINGS</button>
+                <button id="btn-instructions" class="base-button menu-button arabic-font" style="background-color: var(--accent5);" data-i18n="instructions">INSTRUCTIONS</button>
+            </div>
+        </div>
+
+        <!-- Single Player Screen -->
+        <div id="game-screen" class="screen">
+            <div class="game-header">
+                 <div class="custom-label arabic-font sp-highscore" id="high-score-label" data-i18n="single_player_high_score_short" data-i18n-format="HS: {}">HS: 0</div>
+                 <div class="custom-label sp-timer" id="single-player-timer">--</div>
+            </div>
+             <div class="custom-label sp-score" id="single-player-score">0</div>
+             <button id="tap-button" class="base-button game-button sp-tap-button" style="background-color: var(--accent1);"> <span class="game-button-label arabic-font" data-i18n="tap_here">TAP HERE!</span> </button>
+            <div id="single-player-target-area" class="player-area sp-target-area"></div>
+             <button id="btn-game-back" class="base-button menu-button arabic-font sp-back-button" style="background-color: var(--gray-color);" data-i18n="back_to_menu">BACK TO MENU</button>
+        </div>
+
+        <!-- Two Player Screen -->
+        <div id="two-player-screen" class="screen">
+            <div class="player-area player1"> <button id="p1-button" class="base-button game-button tp-game-button"></button> </div>
+            <div id="center-controls" class="center-controls"> <div class="player-info player1"> <div class="player-name custom-label arabic-font" data-i18n="player1">P1</div> <div class="player-score" id="p1-score">0</div> </div> <div class="center-column"> <div id="timer-label" class="timer-display">30</div> <div id="status-label" class="status-display arabic-font" data-i18n="ready">Ready?</div> <div id="two-player-control-buttons" class="control-buttons"> <button id="start-button" class="base-button menu-button control-button arabic-font" data-i18n="start">START</button> <button id="menu-button-2p" class="base-button menu-button control-button arabic-font" data-i18n="menu">MENU</button> </div> </div> <div class="player-info player2"> <div class="player-name custom-label arabic-font" data-i18n="player2">P2</div> <div class="player-score" id="p2-score">0</div> </div> </div>
+             <div class="player-area player2"> <button id="p2-button" class="base-button game-button tp-game-button"></button> </div>
+        </div>
+
+        <!-- Game Log Screen -->
+        <div id="log-screen" class="screen">
+            <h1 class="custom-label arabic-font screen-title" data-i18n="game_log_title">GAME LOG</h1>
+            <div id="log-summary" class="log-summary-box"></div>
+            <div id="log-entries" class="log-entries-box">
+                <p class="log-placeholder" data-i18n="no_log_entries">No games recorded yet.</p>
+            </div>
+            <button id="btn-log-back" class="base-button menu-button arabic-font screen-back-button" style="background-color: var(--accent1);" data-i18n="back_button">BACK TO MENU</button>
+        </div>
+
+        <!-- Achievements Screen -->
+        <div id="achievements-screen" class="screen">
+            <h1 class="custom-label arabic-font screen-title" data-i18n="achievements_title">ACHIEVEMENTS</h1>
+            <div id="achievements-list" class="achievements-list-box">
+                 <p class="log-placeholder" data-i18n="no_achievements_yet">No achievements unlocked yet.</p>
+            </div>
+             <div id="achievement-progress" class="achievement-progress-box"></div>
+            <button id="btn-achievements-back" class="base-button menu-button arabic-font screen-back-button" style="background-color: var(--accent1);" data-i18n="back_button">BACK TO MENU</button>
+        </div>
+
+        <!-- Settings Screen -->
+        <div id="settings-screen" class="screen">
+            <h1 class="custom-label arabic-font screen-title" data-i18n="settings_title">SETTINGS</h1>
+            <div class="settings-section">
+                <button id="sound-toggle" class="base-button menu-button arabic-font setting-button" data-i18n="sound_toggle" data-i18n-format="Sound: {}">Sound: ON</button>
+                <button id="music-toggle" class="base-button menu-button arabic-font setting-button" data-i18n="music_toggle" data-i18n-format="Music: {}">Music: OFF</button> <!-- Music Toggle -->
+                <button id="vibration-toggle" class="base-button menu-button arabic-font setting-button" data-i18n="vibration_toggle" data-i18n-format="Vibration: {}">Vibration: ON</button>
+            </div>
+             <div class="settings-section slider-container"> <label id="duration-label" class="custom-label arabic-font setting-label" data-i18n="game_duration_label" data-i18n-format="Game Duration: {}s">Duration: 30s</label> <input type="range" id="duration-slider" min="10" max="60" step="5" value="30"> </div>
+             <div class="settings-section select-container"> <!-- Difficulty Setting -->
+                <label id="difficulty-label" class="custom-label arabic-font setting-label" data-i18n="difficulty_label">Target Difficulty</label>
+                <select id="difficulty-select" class="setting-select arabic-font">
+                    <option value="easy" data-i18n="difficulty_easy">Easy</option>
+                    <option value="medium" selected data-i18n="difficulty_medium">Medium</option>
+                    <option value="hard" data-i18n="difficulty_hard">Hard</option>
+                </select>
+             </div>
+             <div class="settings-section select-container"> <!-- Theme Setting -->
+                 <label id="theme-label" class="custom-label arabic-font setting-label" data-i18n="theme_label">Theme</label>
+                 <select id="theme-select" class="setting-select arabic-font">
+                    <option value="dark" selected data-i18n="theme_dark">Dark</option>
+                    <option value="light" data-i18n="theme_light">Light</option>
+                 </select>
+             </div>
+            <button id="language-toggle" class="base-button menu-button arabic-font setting-button" style="background-color: var(--accent4);" data-i18n="language_toggle" data-i18n-format="Language: {}">Language: English</button>
+            <button id="btn-settings-back" class="base-button menu-button arabic-font screen-back-button" style="background-color: var(--accent1);" data-i18n="back_button">BACK TO MENU</button>
+        </div>
+
+        <!-- Popup Overlays -->
+        <div id="popup-instructions" class="popup-overlay"> <div class="popup-content"> <h2 class="popup-title arabic-font" data-i18n="instructions">INSTRUCTIONS</h2> <div class="popup-body arabic-font" id="instructions-text"></div> <div id="developer-info" class="developer-info-box"></div> <div class="popup-buttons"> <button class="base-button menu-button popup-close-button arabic-font" style="background-color: var(--accent5);" data-i18n="close">Close</button> </div> </div> </div>
+        <div id="popup-game-over" class="popup-overlay"> <div class="popup-content"> <h2 class="popup-title arabic-font" data-i18n="game_over">GAME OVER</h2> <div class="popup-body"> <div id="winner-text" class="custom-label arabic-font game-over-winner"></div> <div id="final-score-details"></div> <div id="share-button-container"> <button id="btn-share-result" class="base-button menu-button arabic-font" data-i18n="share_result">Share Result</button> </div> </div> <div class="popup-buttons"> <button id="restart-button" class="base-button menu-button arabic-font" style="background-color: var(--accent3);" data-i18n="play_again">Play Again</button> <button id="menu-button-popup" class="base-button menu-button arabic-font" style="background-color: var(--accent1);" data-i18n="main_menu">Main Menu</button> </div> </div> </div>
+        <div id="popup-confirm-quit" class="popup-overlay"> <div class="popup-content"> <div class="popup-body custom-label arabic-font popup-text-large" data-i18n="quit_confirm">Are you sure?</div> <div class="popup-buttons"> <button id="confirm-quit-yes" class="base-button menu-button arabic-font" style="background-color: var(--accent2);" data-i18n="yes">Yes</button> <button id="confirm-quit-no" class="base-button menu-button arabic-font popup-close-button" style="background-color: var(--gray-color);" data-i18n="no">No</button> </div> </div> </div>
+        <div id="countdown-overlay" class="popup-overlay"> <div id="countdown-text">3</div> </div>
+        <div id="popup-mode-select" class="popup-overlay"> <div class="popup-content"> <h2 class="popup-title arabic-font" id="mode-select-title" data-i18n="select_mode">Select Mode</h2> <div class="popup-buttons popup-column-buttons"> <button id="btn-select-tap" class="base-button menu-button arabic-font" style="background-color: var(--accent1);" data-i18n="tap_mode_select">Tap Mode</button> <button id="btn-select-target" class="base-button menu-button arabic-font" style="background-color: var(--accent2);" data-i18n="target_mode_select">Target Mode</button> <button class="base-button menu-button popup-close-button arabic-font popup-cancel-button" style="background-color: var(--gray-color);" data-i18n="cancel">Cancel</button> </div> </div> </div>
+        <div id="popup-achievement" class="popup-overlay achievement-popup"> <div class="popup-content achievement-content"> <div class="achievement-icon">🏆</div> <h3 class="popup-title achievement-title" data-i18n="achievement_unlocked">Achievement Unlocked!</h3> <div id="achievement-name" class="achievement-name"></div> <div id="achievement-desc" class="achievement-desc"></div> </div> </div>
+
+    </div> <!-- End app-container -->
+
+    <!-- تضمين ملفات JavaScript -->
+    <!-- يجب أن تكون تعريفات الترجمة والإنجازات قبل الكود الرئيسي -->
+    <script src="js/translations.js"></script>
+    <script src="js/achievements.js"></script>
+    <!-- <script src="js/ui.js"></script> --> <!-- اختياري، إذا تم إنشاؤه -->
+    <script src="js/app.js"></script>
+
+</body>
+</html>
